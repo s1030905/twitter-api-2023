@@ -10,27 +10,27 @@ module.exports = {
       },
       User_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        reference: {
+        references: {
           model: 'Users',
           key: 'id'
         }
       },
       Tweet_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        reference: {
+        references: {
           model: 'Tweets',
           key: 'id'
         }
       },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     })
   },
