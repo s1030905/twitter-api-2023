@@ -11,9 +11,9 @@ passport.use(new LocalStrategy(
   { usernameField: 'account', passwordField: 'password', passReqToCallback: true },
   async (req, account, password, cb) => {
     try {
-
       const accountError = '帳號不存在！'
       const passwordError = '帳號或密碼輸入錯誤！'
+      const adminError = 'Admin cannot use these function'
 
       const user = await User.findOne({ where: { account } })
 
@@ -21,6 +21,9 @@ passport.use(new LocalStrategy(
       if (!user) {
         // return cb(null, false)
         return cb(accountError, false)
+      }
+      if (user.role === 'admin') {
+        return cb(adminError, false)
       }
       const isMatch = await bcrypt.compare(password, user.password)
 
